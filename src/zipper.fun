@@ -1,4 +1,4 @@
-functor Zipper (RoseTree : ROSE_TREE) : ZIPPER =
+functor Zipper (RoseTree : ROSE_TREE) :> ZIPPER where type tree = RoseTree.tree =
 struct
   type tree = RoseTree.tree
   type forest = tree list
