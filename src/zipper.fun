@@ -1,35 +1,40 @@
 functor Zipper (RoseTree : ROSE_TREE) :> ZIPPER =
 struct
   type tree = RoseTree.tree
+  type forest = tree list
 
-  datatype path =
-      TOP
-    | NODE of tree list * path * tree list
+  type path =
+    {lefts : forest,
+     rights : forest,
+     parents : (forest * RoseTree.elem * forest) list}
+
 
   type location = tree * path
 
   exception InvalidMovement
 
-  fun left (t, p) =
-    case p of
-         TOP => raise InvalidMovement
-       | NODE (l::ls, up, rs) => (l, NODE (ls, up, t::rs))
-       | _ => raise InvalidMovement
+  fun left (t, {lefts,rights,parents}) =
+    case lefts of
+         [] => raise InvalidMovement
+       | l::ls => (l, {lefts = ls, rights = t::rights, parents = parents})
 
-  fun right (t, p) =
-    case p of
-         TOP => raise InvalidMovement
-       | NODE (ls, up, r::rs) => (r, NODE (t::ls, up, rs))
-       | _ => raise InvalidMovement
+  fun right (t, {lefts,rights,parents}) =
+    case rights of
+         [] => raise InvalidMovement
+       | r::rs => (r, {lefts = t::lefts, rights = rs, parents = parents})
 
-  fun up (t, p) =
-    case p of
-         TOP => raise InvalidMovement
-       | NODE (ls, up, rs) => (RoseTree.into (RoseTree.NODE (rev ls @ t::rs)) , up)
+  fun up (t, {lefts,rights,parents}) =
+    case parents of
+         [] => raise InvalidMovement
+       | (ls, a, rs) :: ps =>
+           (RoseTree.into (RoseTree.NODE (a, (rev lefts @ t::rights))),
+            {lefts = ls, rights = rs, parents = ps})
 
-  fun down (t, p) =
+  fun down (t, {lefts,rights,parents}) =
     case RoseTree.out t of
-         RoseTree.LEAF _ => raise InvalidMovement
-       | RoseTree.NODE (t'::ts) => (t', NODE ([], p, ts))
-       | _ => raise InvalidMovement
+         RoseTree.NODE (_, []) => raise InvalidMovement
+       | RoseTree.NODE (a, t'::ts) =>
+           (t', {lefts = [],
+                 rights = ts,
+                 parents = (lefts, a, rights) :: parents})
 end

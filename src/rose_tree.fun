@@ -9,14 +9,11 @@ functor RoseTree (type elem) :> ROSE_TREE =
 struct
   type elem = elem
 
-  datatype 'a view =
-      LEAF of elem
-    | NODE of 'a list
+  datatype 'a view = NODE of elem * 'a list
 
   structure FixView = FixView (type 'a view = 'a view)
   type tree = FixView.t
   open FixView
 
-  fun map f (LEAF E) = LEAF E
-    | map f (NODE xs) = NODE (List.map f xs)
+  fun map f (NODE (E, xs)) = NODE (E, List.map f xs)
 end

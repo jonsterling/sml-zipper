@@ -3,9 +3,7 @@ sig
   type elem
   type tree
 
-  datatype 'a view =
-      LEAF of elem
-    | NODE of 'a list
+  datatype 'a view = NODE of elem * 'a list
 
   val into : tree view -> tree
   val out : tree -> tree view
