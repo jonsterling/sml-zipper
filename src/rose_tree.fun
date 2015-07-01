@@ -5,7 +5,7 @@ struct
   fun out (T t) = t
 end
 
-functor RoseTree (type elem) :> ROSE_TREE =
+functor RoseTree (type elem) :> ROSE_TREE where type elem = elem =
 struct
   type elem = elem
 
