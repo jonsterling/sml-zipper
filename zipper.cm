@@ -1,0 +1,9 @@
+Library
+  signature ZIPPER
+  signature ROSE_TREE
+  functor Zipper
+is
+  $/basis.cm
+  src/zipper.sig
+  src/rose_tree.sig
+  src/zipper.fun
