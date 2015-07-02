@@ -1,11 +1,8 @@
 Library
   signature ZIPPER
-  signature ROSE_TREE
-  functor Zipper
-  functor RoseTree
+  functor FanZipper
 is
   $/basis.cm
+  ../sml-spreads/spreads.cm
   src/zipper.sig
-  src/rose_tree.sig
-  src/zipper.fun
-  src/rose_tree.fun
+  src/fan_zipper.fun

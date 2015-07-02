@@ -1,12 +1,12 @@
-functor Zipper (RoseTree : ROSE_TREE) :> ZIPPER where type tree = RoseTree.tree =
+functor FanZipper (Fan : FAN) :> ZIPPER where type tree = Fan.t =
 struct
-  type tree = RoseTree.tree
+  type tree = Fan.t
   type forest = tree list
 
   type path =
     {lefts : forest,
      rights : forest,
-     parents : (forest * RoseTree.elem * forest) list}
+     parents : (forest * Fan.elem * forest) list}
 
   type location = tree * path
 
@@ -28,13 +28,13 @@ struct
     case parents of
          [] => raise InvalidMovement
        | (ls, a, rs) :: ps =>
-           (RoseTree.into (RoseTree.NODE (a, (rev lefts @ t::rights))),
+           (Fan.into (Fan.NODE (a, (rev lefts @ t::rights))),
             {lefts = ls, rights = rs, parents = ps})
 
   fun down (t, {lefts,rights,parents}) =
-    case RoseTree.out t of
-         RoseTree.NODE (_, []) => raise InvalidMovement
-       | RoseTree.NODE (a, t'::ts) =>
+    case Fan.out t of
+         Fan.NODE (_, []) => raise InvalidMovement
+       | Fan.NODE (a, t'::ts) =>
            (t', {lefts = [],
                  rights = ts,
                  parents = (lefts, a, rights) :: parents})
