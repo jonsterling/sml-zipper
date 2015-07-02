@@ -8,10 +8,11 @@ struct
      rights : forest,
      parents : (forest * RoseTree.elem * forest) list}
 
-
   type location = tree * path
 
   exception InvalidMovement
+
+  fun init t = (t, {lefts = [], rights = [], parents = []})
 
   fun left (t, {lefts,rights,parents}) =
     case lefts of

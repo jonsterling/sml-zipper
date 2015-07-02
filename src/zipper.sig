@@ -7,6 +7,7 @@ sig
 
   exception InvalidMovement
 
+  val init : tree -> location
   val left : location -> location
   val right : location -> location
   val up : location -> location
