@@ -3,6 +3,6 @@ Library
   functor FanZipper
 is
   $/basis.cm
-  ../sml-spreads/spreads.cm
+  $libs/sml-spreads/spreads.cm
   src/zipper.sig
   src/fan_zipper.fun

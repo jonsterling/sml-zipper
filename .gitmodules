@@ -1,0 +1,3 @@
+[submodule "lib/sml-spreads"]
+	path = lib/sml-spreads
+	url = git@github.com:jonsterling/sml-spreads.git

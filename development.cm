@@ -1,0 +1,5 @@
+Library
+  signature ZIPPER
+  functor FanZipper
+is
+  zipper.cm (bind:(anchor:libs value:lib))
